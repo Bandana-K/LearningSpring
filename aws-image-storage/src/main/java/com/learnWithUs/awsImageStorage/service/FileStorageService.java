@@ -43,4 +43,12 @@ public class FileStorageService {
 		}
 	}
 
+	public void delete(String path, Optional<String> key) {
+		try {
+			amazonS3.deleteObject(path, key.get());
+		} catch(AmazonServiceException e) {
+			throw new IllegalStateException("There is no profile image with the key : "+key.get(), e);
+		}
+	}
+
 }

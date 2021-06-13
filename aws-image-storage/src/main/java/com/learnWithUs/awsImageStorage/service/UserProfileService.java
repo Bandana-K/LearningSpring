@@ -29,7 +29,6 @@ public class UserProfileService {
 		return userProfileDataStore.getUserProfiles();
 	}
 
-
 	public void uploadUserProfileImage(String userProfileId, MultipartFile file) {
 		
 		isFileEmpty(file);
@@ -40,6 +39,8 @@ public class UserProfileService {
 		
 		Map<String, String> metaData = extractMetaData(file);
 		
+		removePreviousProfileImage(user);
+					
 		String path = String.format("%s/%s", BucketName.PROFILE_IMAGE.getBucketName(), user.getUserProfileId());
 		String fileName = String.format("%s-%s", file.getOriginalFilename(), UUID.randomUUID());
 
@@ -51,6 +52,11 @@ public class UserProfileService {
 		}
 	}
 
+	private void removePreviousProfileImage(UserProfile user) {
+		if(user.getUserProfileImageLink().isPresent())
+			deleteUserProfileImage(user.getUserProfileId().toString());
+	}
+
 
 	public byte[] downloadUserProfileImage(String userProfileId) {
 		UserProfile user = getUserProfileOrThrow(userProfileId);
@@ -59,6 +65,17 @@ public class UserProfileService {
 		return user.getUserProfileImageLink()
 				.map( key -> fileStorageService.download(path, key))
 				.orElse(new byte[0]);
+	}
+	
+
+	public void deleteUserProfileImage(String userProfileId) {
+		UserProfile user = getUserProfileOrThrow(userProfileId);
+		String path = String.format("%s/%s", BucketName.PROFILE_IMAGE.getBucketName(), user.getUserProfileId());
+		Optional<String> key = user.getUserProfileImageLink();
+		if(key.isPresent())
+			fileStorageService.delete(path, key);
+		else
+			throw new IllegalStateException("There is no profile image set for this user" + user.getUserProfileId());
 	}
 	
 	private Map<String, String> extractMetaData(MultipartFile file) {
