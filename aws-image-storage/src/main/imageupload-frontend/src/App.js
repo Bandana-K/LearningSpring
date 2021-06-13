@@ -22,11 +22,11 @@ const [userProfiles, setUserProfiles] = useState([]);
 
     return (
     <div key={index}>
-      {userProfile.userProfileImageLink ? (<img src ={'http://localhost:8080/user-profiles/${userProfileId}/image/download'} />) : null }
+      {userProfile.userProfileImageLink ? (<img src ={'http://localhost:8080/user-profiles/'+userProfile.userProfileId+'/image/download'} />) : null }
       <br/>
       <br/>
       <h1>{userProfile.userName}</h1>
-      <p>{userProfile.userProfileId}</p>
+      {/* <p>{userProfile.userProfileId}</p> */}
       <Dropzone userProfileId = {userProfile.userProfileId}/>
       <br/>
     </div>
@@ -44,7 +44,7 @@ function Dropzone({userProfileId}) {
     formData.append("file", file)
 
     axios.post(
-      'http://localhost:8080/user-profiles/${userProfileId}/image/upload',
+      'http://localhost:8080/user-profiles/'+userProfileId+'/image/upload',
       formData,
       {
         headers:{

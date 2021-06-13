@@ -25,15 +25,15 @@ public class UserProfileController {
 	
 	@GetMapping
 	public List<UserProfile> getUserProfiles(){
-		return userProfileService.getUserProfiles();
-		
+		return userProfileService.getUserProfiles();	
 	}
 	
 	@PostMapping(
 			path = "/{userProfileId}/image/upload",
 			consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
 			produces = MediaType.APPLICATION_JSON_VALUE)
-	public void uploadUserProfileImage(@PathVariable("userProfileId") String userProfileId, @RequestParam("file") MultipartFile file) {
+	public void uploadUserProfileImage(@PathVariable("userProfileId") String userProfileId, 
+					@RequestParam("file") MultipartFile file) {
 		userProfileService.uploadUserProfileImage(userProfileId, file);
 	}
 	

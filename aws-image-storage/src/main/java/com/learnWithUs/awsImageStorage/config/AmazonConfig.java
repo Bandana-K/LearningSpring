@@ -15,12 +15,12 @@ public class AmazonConfig {
 	@Bean
 	public AmazonS3 s3() {
 		
-		AWSCredentials awsCredentials = new BasicAWSCredentials("",	"");  //Get the appKey and secretKey for your s3 account
+		AWSCredentials awsCredentials = new BasicAWSCredentials("AKIATKEJS4SCEIPKTB56",	"46mIOv9+6f/oAwdtD5K5WoI+s8ZCyh4630MyTifS");  //Get the appKey and secretKey for your s3 account
 		
 		return AmazonS3ClientBuilder
 				.standard()
 				.withCredentials(new AWSStaticCredentialsProvider(awsCredentials))
-				.withRegion(Regions.DEFAULT_REGION)
+				.withRegion(Regions.AP_SOUTH_1)
 				.build();
 	
 	}

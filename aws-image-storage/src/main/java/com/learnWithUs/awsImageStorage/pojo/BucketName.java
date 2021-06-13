@@ -2,7 +2,7 @@ package com.learnWithUs.awsImageStorage.pojo;
 
 public enum BucketName {
 	
-	PROFILE_IMAGE(""); //get the name of the s3 bucket created
+	PROFILE_IMAGE("learnwithus-awsimagestorage"); //get the name of the s3 bucket created
 	
 	private final String bucketName;	
 
